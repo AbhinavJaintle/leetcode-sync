@@ -1,32 +1,28 @@
 class Solution {
 public:
-    int threeSumClosest(vector<int> nums, int target) {
-     vector<int> arr = nums;   
-     sort(arr.begin(),arr.end());
-    int diff=INT_MAX;
-    int ans=0;
-    
-	for(int i=0;i<arr.size();i++){        // fixing the first element 
-	
-        int left = i+1;      // set a pointer at starting (next to the fixed element) 
-		
-        int right = arr.size()-1;    // set another pointer at end of the array
-		
-        while(left<right){
-            if(arr[i]+arr[left]+arr[right]==target){
+int threeSumClosest(vector<int> nums, int target){
+    int diff = INT_MAX;
+    int ans = 0;
+    sort(nums.begin(),nums.end());
+    for(int i =0; i<nums.size();i++){
+        int l = i+1;
+        int r = nums.size()-1;
+        while(l<r){
+            if(nums[i]+nums[r]+nums[l]==target){
                 return target;
-            }else if(abs(arr[i]+arr[left]+arr[right]-target)<diff){  //abs(): returns the absolute value of an integer number
-                diff=abs(arr[i]+arr[left]+arr[right]-target);
-                ans = arr[i]+arr[left]+arr[right];
+            }else if(abs(nums[i]+nums[r]+nums[l]-target)<diff){
+                diff = abs(nums[i]+nums[r]+nums[l]-target);
+                ans = nums[i]+nums[r]+nums[l];
             }
-			
-            if(arr[i]+arr[left]+arr[right]>target){
-                right--;
-            }else{
-                left++;
+            if(nums[i]+nums[r]+nums[l]<target){
+                l++;
+            }
+            else{
+                r--;
             }
         }
+        
     }
     return ans;
-}   
+} 
 };
