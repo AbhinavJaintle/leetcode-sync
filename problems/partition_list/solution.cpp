@@ -11,63 +11,57 @@
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-        
-        ListNode* l1Head = new ListNode;
-        ListNode* l2Head = new ListNode;
-        ListNode* l1last = new ListNode;
-        ListNode* l2last = new ListNode;
-        ListNode* p = new ListNode;
-        int head1 = 0;
-        int head2 = 0;
-        p = head;
-        cout<<endl;
+        ListNode* l1head = new ListNode();
+        ListNode* l2head = new ListNode();
+        ListNode* l1last = new ListNode();
+        ListNode* l2last = new ListNode();
+        ListNode* p = head;
         if(head==NULL){
             return head;
         }
+        int head1 = 0;
+        int head2 = 0;
         while(p!=NULL){
-            if(p->val<x){
-                if(head1==0){
-                    l1Head->val = p->val;
-                    l1Head->next = NULL;
-                    l1last = l1Head;
-                    head1=1;
-                }
-                else{
-                    ListNode* l1 = new ListNode;
-                    l1->val = p->val;
-                    l1->next = NULL;
-                    l1last->next = l1;
-                    l1last = l1;
-                }
+          if(p->val<x){
+           
+            if(head1==0){
+                l1head->val = p->val;
+                l1last = l1head;
+                head1=1;
             }
             else{
-                
-                if(head2==0){
-                    l2Head->val = p->val;
-                    l2Head->next = NULL;
-                    l2last = l2Head;
-                    head2 = 1;
-                }
-                else{
-                    ListNode* l2 = new ListNode;
-                    l2->val = p->val;
-                    l2->next = NULL;
-                    l2last->next = l2;
-                    l2last = l2;
-                }     
+                ListNode* temp = new ListNode();
+                temp->val = p->val;
+                l1last->next = temp;
+                l1last = temp;
             }
-            p = p->next;
+              
+          }
+          else{
+           
+            if(head2==0){
+                l2head->val = p->val;
+                l2last = l2head;
+                head2=1;
+            }
+            else{
+                ListNode* temp = new ListNode();
+                temp->val = p->val;
+                l2last->next = temp;
+                l2last = temp;
+            }
+              
+          }
+          p = p->next;
         }
-        
         if(head1==0){
-            return l2Head;
+            return l2head;
         }
         if(head2==0){
-            l1last = NULL;
-            return l1Head;
+            return l1head;
         }
-        l1last->next = l2Head;
-        return l1Head;   
+        l1last->next = l2head;
+        return l1head;
         
-}
+    }
 };
