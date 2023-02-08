@@ -1,6 +1,5 @@
 class Solution {
-public:
-        
+public:        
     int jump(vector<int>& nums) {
         if(nums.size()==1){
             return 0;
