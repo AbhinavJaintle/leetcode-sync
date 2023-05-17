@@ -11,19 +11,24 @@
  */
 class Solution {
 public:
+    TreeNode* helper(int& index, int left, int right, vector<int>& preorder, vector<int>& inorder){
+        if(index==inorder.size()||left==right)return NULL;
+        int p = -1;
+        for(int i = left; i<right; i++){
+            if(inorder[i]==preorder[index]){
+                p=i;
+                break;
+            }
+        }
+        if(p==-1)return NULL;
+        TreeNode* root = new TreeNode(preorder[index]);
+        index++;
+        root->left = helper(index,left,p,preorder,inorder);
+        root->right = helper(index,p+1,right,preorder,inorder);
+        return root;
+    }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-    map<int, int>m;
-    for(int i=0; i<inorder.size(); i++){m[inorder[i]]=i;}
-    TreeNode* root=formtree(preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1, m);
-    return root;
-}
-TreeNode* formtree(vector<int>&preorder, int prst, int pren, vector<int>& inorder, int inst, int inen, map<int, int>& m){
-    if(prst>pren || inst>inen){return NULL;}
-    TreeNode* root=  new TreeNode(preorder[prst]);
-    int pos=m[preorder[prst]];
-    int lft=pos-inst;
-    root->left=formtree(preorder, prst+1, prst+lft, inorder, inst, pos-1, m);
-    root->right=formtree(preorder, prst+lft+1, pren, inorder, pos+1, inen, m);
-    return root;
-}
+        int s = 0;
+        return helper(s,0,preorder.size(),preorder,inorder);
+    }
 };
