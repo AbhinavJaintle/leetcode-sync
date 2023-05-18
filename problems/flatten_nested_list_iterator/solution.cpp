@@ -17,30 +17,31 @@
  */
 
 class NestedIterator {
-    vector<int>v={};
-    int index=-1;
 public:
-    NestedIterator(vector<NestedInteger> nestedList) {
-        helper(nestedList);
-    }
-    void helper(vector<NestedInteger> nestedList){
-        for(int i = 0; i<nestedList.size(); i++){
-            if(nestedList[i].isInteger()){
-                v.push_back(nestedList[i].getInteger());
-            }
-            else{
-                helper(nestedList[i].getList());
-            }
+    vector<int> v = {};
+    int n = 0; 
+    int i = 0;
+
+    void helper(int index, vector<NestedInteger>& nestedList){
+        if(index>=nestedList.size())return;
+        if(nestedList[index].isInteger()){
+            v.push_back(nestedList[index].getInteger());
         }
+        else helper(0,nestedList[index].getList());
+        helper(index+1, nestedList);
+    }
+
+    NestedIterator(vector<NestedInteger> &nestedList) {
+        helper(0,nestedList);
+        n = v.size();
     }
     
     int next() {
-        index++;
-        return v[index];
+        return v[i++];
     }
     
     bool hasNext() {
-        return index<v.size()-1||(index==-1&&v.size());
+        return i<n;
     }
 };
 
